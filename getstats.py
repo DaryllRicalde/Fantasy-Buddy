@@ -11,7 +11,7 @@ def parameter():
     lname = input("Whats the last name?")
     fname.lower()
     lname.lower()
-    url = "https://www.balldontlie.io/api/v1/players?search=" + lname
+    url = "https://www.balldontlie.io/api/v1/players?search=" + lname + "&per_page=100"
     response = requests.get(url)
     data = response.json()
     query = data["data"]
