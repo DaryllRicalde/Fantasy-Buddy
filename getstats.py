@@ -1,8 +1,5 @@
-<<<<<<< HEAD:requests.py
-=======
 import flask
 import json
->>>>>>> 16ce8c63926f77124469f740a981738305ef3128:getstats.py
 import requests
 
 def parameter():
