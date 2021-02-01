@@ -5,7 +5,7 @@ import requests
 def parameter():
     season = input("Which season?")
     season = str(season)
-    #p_ID = input("Which player?")
+    p_ID = 9999
     fname = input("Whats the first name?")
     lname = input("Whats the last name?")
     fname.lower()
@@ -19,10 +19,10 @@ def parameter():
         player_info = query[i]["first_name"]
         if player_info.lower() == fname:
             print(query[i]["id"])
-            p_ID = str(query[i]["id"])
+            p_ID = query[i]["id"]
         i+=1
 
-    param = "?seasons[]=" + season + "&player_ids[]=" + p_ID + "&postseason=false"
+    param = "?seasons[]=" + season + "&player_ids[]=" + str(p_ID) + "&postseason=false"
     #print (param)
     return param
 
