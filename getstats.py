@@ -5,7 +5,6 @@ import requests
 def parameter():
     season = input("Which season?")
     #p_ID = input("Which player?")
-    p_ID = 999999
     fname = input("Whats the first name?")
     lname = input("Whats the last name")
     url = "https://www.balldontlie.io/api/v1/players"
