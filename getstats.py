@@ -4,16 +4,24 @@ import requests
 
 def parameter():
     season = input("Which season?")
+    season = str(season)
     #p_ID = input("Which player?")
     fname = input("Whats the first name?")
-    lname = input("Whats the last name")
-    url = "https://www.balldontlie.io/api/v1/players"
+    lname = input("Whats the last name?")
+    fname.lower()
+    lname.lower()
+    url = "https://www.balldontlie.io/api/v1/players?search=" + lname
     response = requests.get(url)
     data = response.json()
     query = data["data"]
+    i = 0
     while i < len(query):
-        if fname in query and lname in query:
-            p_ID = query["id"]
+        player_info = query[i]["first_name"]
+        if player_info.lower() == fname:
+            print(query[i]["id"])
+            p_ID = str(query[i]["id"])
+        i+=1
+
     param = "?seasons[]=" + season + "&player_ids[]=" + p_ID + "&postseason=false"
     #print (param)
     return param
