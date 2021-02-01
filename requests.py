@@ -1,3 +1,5 @@
+import requests
+
 def parameter():
     season = input("Which season?")
     p_ID = input("Which player?")
