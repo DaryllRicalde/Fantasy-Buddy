@@ -10,7 +10,7 @@ def parameter():
     lname = input("Whats the last name?")
     fname.lower()
     lname.lower()
-    url = "https://www.balldontlie.io/api/v1/players?search=" + lname
+    url = "https://www.balldontlie.io/api/v1/players?search=" + lname + "&per_page=100"
     response = requests.get(url)
     data = response.json()
     query = data["data"]
@@ -28,7 +28,7 @@ def parameter():
 
 def getStats():
     url = "https://www.balldontlie.io/api/v1/stats"
-    param_url = url + parameter()
+    param_url = url + str(parameter())
     #print(param_url)
     response = requests.get(param_url)
     p_list = []
