@@ -17,15 +17,15 @@ def index():
     jsonData = requests.get(url, headers=headers).json()
 
     i = 0
-    fname = ""
+    name = ""
     lebron_image = ""
     while i < len(jsonData):
         if jsonData[i]["FirstName"].lower() == "Lebron" and jsonData[i]["LastName"].lower() == "James":
-            fname = jsonData[i]["FirstName"]
+            name = jsonData[i]["FirstName"]
             lebron_image = jsonData[i]["PhotoUrl"]
         i+= 1
 
-    return render_template("home.html", fname=fname)
+    return render_template("home.html", fname=name)
 
 @app.route("/search")
 def search():
