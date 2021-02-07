@@ -20,12 +20,12 @@ def index():
     name = ""
     lebron_image = ""
     while i < len(jsonData):
-        if jsonData[i]["FirstName"].lower() == "Lebron" and jsonData[i]["LastName"].lower() == "James":
+        if jsonData[i]["FirstName"].lower() == "lebron" and jsonData[i]["LastName"].lower() == "james":
             name = jsonData[i]["FirstName"]
             lebron_image = jsonData[i]["PhotoUrl"]
         i+= 1
 
-    return render_template("home.html", fname=name)
+    return render_template("home.html", fname=name, image=lebron_image)
 
 @app.route("/search")
 def search():
