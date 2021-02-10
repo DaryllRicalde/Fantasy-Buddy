@@ -6,13 +6,12 @@
   <!--Bootstrap-->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <!--Custom styles-->
   <style>
-    .navbar{
+     .navbar{
     margin-bottom: 0px;
-    }
+    } 
     .jumbotron {
     background-image: url("static/images/photo-1544919982-b61976f0ba43.jpg");
     background-size: cover;
@@ -23,11 +22,21 @@
     .container{
       color: white;
     }
+
+    .input{
+      width:50%;
+    }
+
+    .h1{
+      text-align: center;
+    }
+    
   </style>
 </head>
 <body>
    <!--Navigation bar-->
-  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <!-- <nav class="navbar navbar-light" style="background-color: #e3f2fd;"> -->
+    <div class="navbar transparent navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">Fantasy Buddy</a>
@@ -46,8 +55,15 @@
 
   <!--Container-->
   <div class="jumbotron jumbotron-fluid" style="height:100vh;">
-      <h1 class="display-4">{% block heading %} {% endblock %}</h1>
-      
+    <div class="container">
+      <h1 class="display-2">{% block heading %} 
+        {% endblock %}</h1>
+      <p class="lead">{% block body %}
+        {% endblock %}</p>
+        <hr class="my-4">
+        
+      </div>
+    </div>
   </div>
 </body>
 </html>
