@@ -2,7 +2,7 @@ import requests
 import config
 import json
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 
 app = Flask(__name__)
 
@@ -32,6 +32,14 @@ def search():
     
 
     return render_template("search.html")
+
+@app.route("/player",methods=["GET","POST"])
+def player():
+
+    firstName = request.form["firstName"]
+    return render_template("player.html",
+    firstName=firstName
+    )
 
 # def getLogs():
 #     url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/20000441/all"

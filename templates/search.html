@@ -1,33 +1,53 @@
-{% extends "layout.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Fantasy Buddy</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"
+  
+  </head>
 
-{% block title %}
-The Nook
-{% endblock %}
+  <body>
 
-{% block heading %}
-{% endblock %}
 
-{% block body %}
-<!-- Search form -->
-<!-- Search id = "query" -->
-<div class="container">
-  <div class="row">
-      <div class="col-md-6">
-        <form>
-          <div class="form-group">
-            <label for="playerFirstName">First Name</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="e.g. LeBron">
-          </div>
-          </form>
-      </div>
-      <div class="col-md-6">
-        <form>
-        <div class="form-group">
-          <label for="playerLastName">Last Name</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="e.g. James">
+    <!--NAVBAR-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Fantasy Buddy</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Search</a>
+            </li>
+          </ul>
         </div>
-        </form>
       </div>
+    </nav>
+    <!--Navbar end-->
+
+    <div class="container-fluid">
+    <!-- FORM DIV -->
+    <form action="{{ url_for('player')}}" method="post">
+    <div class="row g-3">
+      <div class="col-sm-5">
+        <input type="text" class="form-control" name="firstName" placeholder="First Name" aria-label="City">
+      </div>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" name="lastName" placeholder="Last Name" aria-label="State">
+      </div>
+      <div class="col-sm">
+        <input type="submit" class="form-control" placeholder="Search" aria-label="Example text with button addon" aria-describedby="button-addon1">
+      </div>
+    </div>
   </div>
-</div>
-{% endblock %}
+</form>
+<!--END FORM DIV-->
+  </body>
+</html>

@@ -3,67 +3,59 @@
 <head>
   <title>{% block title %}{% endblock %}</title>
   
-  <!--Bootstrap-->
+  <!--Bootstrap v5-->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-  <!--Custom styles-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous"
+  
+  <!-- Custom styles-->
+
   <style>
-     .navbar{
-    margin-bottom: 0px;
-    } 
-    .jumbotron {
-    background-image: url("static/images/photo-1544919982-b61976f0ba43.jpg");
-    background-size: cover;
-    height: 100%;
-    margin-bottom: 0px;
+    .main-container{
+      background-image:url('static/images/photo-1544919982-b61976f0ba43.jpg');
+      background-repeat:no-repeat;
+      background-size:contain;
+      background-position:center;
     }
-    
-    .container{
-      color: white;
-    }
-
-    .input{
-      width:50%;
-    }
-
-    .h1{
-      text-align: center;
-    }
-    
   </style>
 </head>
 <body>
    <!--Navigation bar-->
-  <!-- <nav class="navbar navbar-light" style="background-color: #e3f2fd;"> -->
-    <div class="navbar transparent navbar-inverse navbar-fixed-top">
+  <header>
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#">Fantasy Buddy</a>
+      <a class="navbar-brand" href="#">Fantasy Buddy</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Search</a>
+          </li>
+        </ul>
       </div>
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="{{ url_for('index') }}"><span class="glyphicon glyphicon-home"></span>Home </a></li>
-        <li><a href="{{ url_for('search') }}"><span class="glyphicon glyphicon-search"></span>Search Players </a></li>
-        <li><a href="#">Foo</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href= "/"><span class="glyphicon glyphicon-user"></span>Register</a></li>
-        <li><a href="/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
     </div>
-  </nav>    
-
-  <!--Container-->
-  <div class="jumbotron jumbotron-fluid" style="height:100vh;">
-    <div class="container">
-      <h1 class="display-2">{% block heading %} 
-        {% endblock %}</h1>
-      <p class="lead">{% block body %}
-        {% endblock %}</p>
-        <hr class="my-4">
-        
+  </nav>
+  <!--Navbar end-->
+  
+  <div class="container main-container">
+    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
+      <div class="d-flex justify-content-center align-items-center h-100">
+        <div class="text-white">
+          <h1 class="mb-3">Heading</h1>
+          <h4 class="mb-3">Subheading</h4>
+          <a class="btn btn-outline-light btn-lg" href="#!" role="button"
+            >Call to action</a
+          >
+        </div>
       </div>
     </div>
   </div>
+  <!-- Background image -->
+</header>
 </body>
 </html>
