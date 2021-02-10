@@ -16,22 +16,19 @@ def index():
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
 
-    i = 0
-    name = ""
-    lebron_image = ""
-    while i < len(jsonData):
-        if jsonData[i]["FirstName"].lower() == "lebron" and jsonData[i]["LastName"].lower() == "james":
-            name = jsonData[i]["FirstName"]
-            lebron_image = jsonData[i]["PhotoUrl"]
-        i+= 1
-
-    return render_template("home.html", fname=name, image=lebron_image)
+    return render_template("home.html")
 
 @app.route("/search")
 def search():
     
 
     return render_template("search.html")
+
+@app.route("/results/<playerID>", methods=["GET","POST"])
+def player():
+
+    
+    return render_template("player.html")
 
 # def getLogs():
 #     url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/20000441/all"
