@@ -23,7 +23,6 @@ def search():
 
     return render_template("search.html")
 
-<<<<<<< HEAD
 @app.route("/player",methods=["GET","POST"])
 def player():
 
@@ -38,13 +37,6 @@ def player():
     firstName=firstName,
     playerID=playerID
     )
-=======
-@app.route("/results/<playerID>", methods=["GET","POST"])
-def player():
-
-    
-    return render_template("player.html")
->>>>>>> master
 
 # def getLogs():
 #     url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/20000441/all"
