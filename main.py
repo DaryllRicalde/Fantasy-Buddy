@@ -45,17 +45,14 @@ def getLogs(playerID):
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
-    points = []
+    points_list = []
 
-    data = jsonData[0]
-    data_items = data.items()
+    for i in range(len(jsonData)):
+        points = jsonData[i]["Points"]
+        points_list.append(points)
+        i += 1
 
-    for item in data_items:
-        if item == "Points":
-            points.append(item)
-    
-    # points = jsonData[0]["Points"]
-    return points
+    return points_list
 
 def getPlayer(firstName,lastName):
     url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
