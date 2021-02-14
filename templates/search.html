@@ -2,6 +2,7 @@
 
 {% block title %}
 Fantasy Buddy
+<<<<<<< HEAD
 {% endblock %}
 
 {% block body %}
@@ -25,3 +26,39 @@ Fantasy Buddy
 </form>
 <!--END FORM DIV-->
 {%endblock%}
+=======
+{% endblock %}
+
+{% block heading %}
+{% endblock %}
+
+{% block body %}
+<!-- Search form -->
+<!-- Search id = "query" -->
+<form action="{{ url_for('player') }}" method="post">
+<div class="container">
+  <div class="row">
+      <div class="col-md-6">
+        <form>
+          <div class="form-group">
+            <label for="playerFirstName">First Name</label>
+            <input type="email" class="form-control" id="firstName" placeholder="e.g. LeBron">
+          </div>
+          </form>
+      </div>
+      <div class="col-md-6">
+        <form>
+        <div class="form-group">
+          <label for="playerLastName">Last Name</label>
+          <input type="password" class="form-control" id="lastName" placeholder="e.g. James">
+        </div>
+        <div class="col-md-6">
+        <input class="btn btn-primary" type="submit" value="Search">
+        </div>
+      </div>
+        </form>
+  </div>
+</div>
+</form>
+{% endblock %}
+>>>>>>> master
