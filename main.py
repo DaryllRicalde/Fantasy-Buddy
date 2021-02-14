@@ -37,6 +37,8 @@ def search():
 def player():
 
     firstName = request.form["firstName"]
+
+    
     return render_template("player.html",
     firstName=firstName
     )
