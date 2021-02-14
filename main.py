@@ -29,7 +29,6 @@ def index():
 
 @app.route("/search")
 def search():
-    
 
     return render_template("search.html")
 
@@ -37,10 +36,15 @@ def search():
 def player():
 
     firstName = request.form["firstName"]
+    lastName = request.form["lastName"]
+
+    playerID = getPlayer(firstName,lastName)
+
 
     
     return render_template("player.html",
-    firstName=firstName
+    firstName=firstName,
+    playerID=playerID
     )
 
 # def getLogs():
@@ -51,19 +55,18 @@ def player():
 #     points = jsonData[0]["Points"]
 #     print(data)
 
-# def getPlayer():
-#     url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
-#     api_key = config.api_key
-#     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
-#     jsonData = requests.get(url, headers=headers).json()
-#     fname = input("What is the player's first name?")
-#     lname = input("What is the player's last name?")
+def getPlayer(firstName,lastName):
+    url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
+    api_key = config.api_key
+    headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
+    jsonData = requests.get(url, headers=headers).json()
 
-#     i = 0
-#     while i < len(jsonData):
-#         if jsonData[i]["FirstName"].lower() == fname.lower() and jsonData[i]["LastName"].lower() == lname.lower():
-#             print(jsonData[i]["PlayerID"])
-#         i+= 1
+    i = 0
+    while i < len(jsonData):
+        if jsonData[i]["FirstName"].lower() == firstName.lower() and jsonData[i]["LastName"].lower() == lastName.lower():
+            playerID = jsonData[i]["PlayerID"]
+        i+= 1
 
+    return playerID
 if __name__ == "__main__":
     app.run()
