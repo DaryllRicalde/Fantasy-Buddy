@@ -29,15 +29,17 @@ def player():
     firstName = request.form["firstName"]
     lastName = request.form["lastName"]
 
-    playerID, playerImage = getPlayer(firstName,lastName)
+    playerID, playerImage,team,position = getPlayer(firstName,lastName)
     p_points = getLogs(playerID)
 
 
     
     return render_template("player.html",
     firstName=firstName,
-    playerID=playerID,
+    lastName = lastName,
+    team=team,
     image = playerImage,
+    position = position,
     points=p_points
     )
 
@@ -68,11 +70,13 @@ def getPlayer(firstName,lastName):
     while i < len(jsonData):
         if jsonData[i]["FirstName"].lower() == firstName.lower() and jsonData[i]["LastName"].lower() == lastName.lower():
             playerID = jsonData[i]["PlayerID"]
+            team = jsonData[i]["Team"]
             playerImg = jsonData[i]["PhotoUrl"]
+            position = jsonData[i]["Position"]
         i+= 1
 
 
 
-    return playerID,playerImg
+    return playerID,playerImg,team,position
 if __name__ == "__main__":
     app.run()

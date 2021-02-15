@@ -8,7 +8,7 @@ Fantasy Buddy
 <div class="border d-flex align-items-center justify-content-center"
 style="height: 50%;"">
     <div class="card" style="width: 18rem">
-        <div class = "text-center">
+        <div class = "text-center"> <!-- Center player's image-->
             <img
             src= {{ image }}
             class="img-fluid rounded-circle"
@@ -17,20 +17,18 @@ style="height: 50%;"">
             />
         </div>
         <div class="card-body">
-        <h5 class="card-title">{{firstName}}</h5>
+        <h5 class="card-title">{{firstName}} {{ lastName }} </h5>
         <p class="card-text">
             Some quick example text to build on the card title and make up the bulk of the
             card's content.
         </p>
         </div>
         <ul class="list-group list-group-flush">
-        <li class="list-group-item">{{playerID}}</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
+        <li class="list-group-item"><p class="h6">Team: {{team}}</p></li>
+        <li class="list-group-item"><p class="h6">Position: {{position}}</p></li>
         </ul>
         <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+            <div class = "text-center"> <a href="/search" class="card-link">Search for another player</a></div>
         </div>
     </div>
 
