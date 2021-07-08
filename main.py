@@ -32,6 +32,13 @@ def player():
     playerID,playerImage,team,position = getPlayer(firstName,lastName)
     ppg= getLogs(playerID)
 
+    data = [
+        ("PPG", ppg)
+    ]
+
+    labels = [row[0] for row in data]
+    values = [row[1] for row in data]
+
     
     return render_template("player.html",
     firstName=firstName,
@@ -39,7 +46,9 @@ def player():
     team=team,
     image = playerImage,
     position = position,
-    ppg=ppg
+    ppg=ppg,
+    labels = labels,
+    values = values
     )
 
 def getLogs(playerID): #Gets points and other stats averaged
@@ -66,7 +75,7 @@ def getLogs(playerID): #Gets points and other stats averaged
         if jsonData[i]["PlayerID"] == playerID:
             points = jsonData[i]["Points"]
             games = jsonData[i]["Games"]
-            ppg = round(points / games, 2)
+            ppg = round(points / games, 2) # round up to two decimal places
         i += 1
 
     return ppg
