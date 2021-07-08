@@ -30,7 +30,7 @@ def player():
     lastName = request.form["lastName"] # Player's last name
 
     playerID,playerImage,team,position = getPlayer(firstName,lastName)
-    p_points = getLogs(playerID)
+    ppg= getLogs(playerID)
 
     
     return render_template("player.html",
@@ -39,22 +39,38 @@ def player():
     team=team,
     image = playerImage,
     position = position,
-    points=p_points
+    ppg=ppg
     )
 
-def getLogs(playerID): #Gets points and other stats
-    url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/" + str(playerID) + "/all" # Add player ID to URL to get this player's stats
+def getLogs(playerID): #Gets points and other stats averaged
+    # url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/" + str(playerID) + "/all" # Add player ID to URL to get this player's stats
+    # api_key = config.api_key
+    # headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
+    # jsonData = requests.get(url, headers=headers).json()
+    # points_list = [] 
+
+    # for i in range(len(jsonData)):
+    #     points = jsonData[i]["Points"]
+    #     points_list.append(points)
+    #     i += 1
+
+    # return points_list
+
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2020" # Endpoint for stats by all players in 2020 season
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
-    points_list = [] 
 
-    for i in range(len(jsonData)):
-        points = jsonData[i]["Points"]
-        points_list.append(points)
+    i = 0
+    while i < len(jsonData):
+        if jsonData[i]["PlayerID"] == playerID:
+            points = jsonData[i]["Points"]
+            games = jsonData[i]["Games"]
+            ppg = round(points / games, 2)
         i += 1
 
-    return points_list
+    return ppg
+
 
 def getPlayer(firstName,lastName): # Gets a player 
     url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
