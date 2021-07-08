@@ -11,14 +11,14 @@ key = config.api_key
 @app.route("/")
 def index():
 
-    url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
+    url = "https://api.sportsdata.io/v3/nba/scores/json/Players" 
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
 
     return render_template("home.html")
 
-@app.route("/search")
+@app.route("/search") # Page where users will search for the player
 def search():
 
     return render_template("search.html")
@@ -26,12 +26,11 @@ def search():
 @app.route("/player",methods=["GET","POST"])
 def player():
 
-    firstName = request.form["firstName"]
-    lastName = request.form["lastName"]
+    firstName = request.form["firstName"] # Player's first name
+    lastName = request.form["lastName"] # Player's last name
 
-    playerID, playerImage,team,position = getPlayer(firstName,lastName)
+    playerID = getPlayer(firstName,lastName)
     p_points = getLogs(playerID)
-
 
     
     return render_template("player.html",
@@ -43,12 +42,12 @@ def player():
     points=p_points
     )
 
-def getLogs(playerID):
-    url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/" + str(playerID) + "/all"
+def getLogs(playerID): #Gets points and other stats
+    url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/" + str(playerID) + "/all" # Add player ID to URL to get this player's stats
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
-    points_list = []
+    points_list = [] 
 
     for i in range(len(jsonData)):
         points = jsonData[i]["Points"]
@@ -57,25 +56,19 @@ def getLogs(playerID):
 
     return points_list
 
-def getPlayer(firstName,lastName):
+def getPlayer(firstName,lastName): # Gets a player 
     url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
 
     playerID = 99999
-    playerImg = ""
 
     i = 0
     while i < len(jsonData):
         if jsonData[i]["FirstName"].lower() == firstName.lower() and jsonData[i]["LastName"].lower() == lastName.lower():
             playerID = jsonData[i]["PlayerID"]
-            team = jsonData[i]["Team"]
-            playerImg = jsonData[i]["PhotoUrl"]
-            position = jsonData[i]["Position"]
         i+= 1
-
-
 
     return playerID,playerImg,team,position
 if __name__ == "__main__":
