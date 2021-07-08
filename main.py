@@ -29,7 +29,7 @@ def player():
     firstName = request.form["firstName"] # Player's first name
     lastName = request.form["lastName"] # Player's last name
 
-    playerID = getPlayer(firstName,lastName)
+    playerID,playerImage,team,position = getPlayer(firstName,lastName)
     p_points = getLogs(playerID)
 
     
@@ -66,10 +66,15 @@ def getPlayer(firstName,lastName): # Gets a player
 
     i = 0
     while i < len(jsonData):
-        if jsonData[i]["FirstName"].lower() == firstName.lower() and jsonData[i]["LastName"].lower() == lastName.lower():
+        if jsonData[i]["FirstName"].lower() == firstName.lower() and jsonData[i]["LastName"].lower() == lastName.lower(): #if we find the player that match the query
             playerID = jsonData[i]["PlayerID"]
+            playerImg = jsonData[i]["PhotoUrl"]
+            team = jsonData[i]["Team"]
+            position = jsonData[i]["Position"]
         i+= 1
 
     return playerID,playerImg,team,position
+
+
 if __name__ == "__main__":
     app.run()
