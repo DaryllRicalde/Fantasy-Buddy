@@ -23,6 +23,22 @@ def search():
 
     return render_template("search.html")
 
+@app.route("/test")
+def test():
+
+    playerID,playerImage,team,position = getPlayer("Bradley","Beal")
+    ppg= getLogs(playerID)
+
+    data = [
+        ("PPG", ppg),
+        ("APG", 9)
+    ]
+
+    labels = [row[0] for row in data]
+    values = [row[1] for row in data]
+
+    return render_template("test.html", labels=labels, values=values,team=team,position=position,ppg=ppg)
+
 @app.route("/player",methods=["GET","POST"])
 def player():
 
@@ -33,7 +49,8 @@ def player():
     ppg= getLogs(playerID)
 
     data = [
-        ("PPG", ppg)
+        ("PPG", ppg),
+        ("APG", 9)
     ]
 
     labels = [row[0] for row in data]
@@ -46,7 +63,7 @@ def player():
     team=team,
     image = playerImage,
     position = position,
-    ppg=ppg,
+    ppg = ppg,
     labels = labels,
     values = values
     )
@@ -70,6 +87,7 @@ def getLogs(playerID): #Gets points and other stats averaged
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
 
+    ppg = 0
     i = 0
     while i < len(jsonData):
         if jsonData[i]["PlayerID"] == playerID:
