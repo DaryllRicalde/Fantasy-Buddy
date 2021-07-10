@@ -6,74 +6,78 @@ Fantasy Buddy
 
 {%block body %}
 
-<!-- -->
-<div class="container">                                              <!-- Main Div-->
-    <div class="row">
-        <div class="col">                               <!--Card Column-->
-            <div class="card" style="width: 18rem">         <!-- Card Div -->
-                <div class = "text-center">         <!-- Center player's image-->
-                    <img 
-                    src= {{ image }}
-                    class="img-fluid rounded-circle"
-                    alt="..."
-                    style="width: 90px;"
-                    />
-                </div>
-                <div class="card-body">
-                <h5 class="card-title">{{firstName}} {{ lastName }} </h5>
-                <p class="card-text">
-                    Information about this player
-                </p>
-                </div>
-                <ul class="list-group list-group-flush">
-                <li class="list-group-item"><p class="h6">Team: {{team}}</p></li>
-                <li class="list-group-item"><p class="h6">Position: {{position}}</p></li>
-                <li class="list-group-item"><p class="h6">PPG: {{ppg}}</p></li>
-                </ul>
-                <div class="card-body">
-                    <div class = "text-center"> <a href="/search" class="card-link">Search for another player</a></div>
-                </div>
+<div class="row">
+    <div class="mx-auto" style="width:200px;">                               <!--Card Column-->
+        <div class="card" style="width: 18rem">         <!-- Card Div -->
+            <div class = "text-center">         <!-- Center player's image-->
+                <img 
+                src= {{ image }}
+                class="img-fluid rounded-circle"
+                alt="..."
+                style="width: 90px;"
+                />
+            </div>
+            <div class="card-body">
+            <h5 class="card-title">{{firstName}} {{ lastName }} </h5>
+            <p class="card-text">
+                Information about this player
+            </p>
+            </div>
+            <ul class="list-group list-group-flush">
+            <li class="list-group-item"><p class="h6">Team: {{team}}</p></li>
+            <li class="list-group-item"><p class="h6">Position: {{position}}</p></li>
+            <li class="list-group-item"><p class="h6">PPG: {{ppg}}</p></li>
+            </ul>
+            <div class="card-body">
+                <div class = "text-center"> <a href="/search" class="card-link">Search for another player</a></div>
             </div>
         </div>
-        
-        <div class="col"> <!--Chart Column-->
-            <canvas id="barChart" width="900" height="400"></canvas> 
-            <script> 
-                var ctx = document.getElementById('barChart').getContext('2d') // Provide ChartJS the 2d context of the canvas (where it can draw within the canvas)
-                type: 'bar',
-                data: {
-                    labels: {{ labels | safe }},
-                    datasets: [{
-                        label: '# of Votes',
-                        data: {{ values | safe }},
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+    </div>
+    
+    <div class="col-sm-6"> <!--Chart Column-->
+        <div class = "card card-style mb-2">
+            <div class = "card-body">
+                <div class = "chart-container" style="position: relative;">
+                    <canvas id="myChart"></canvas>
+                    <script>
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: {{ labels | safe }},
+                            datasets: [{
+                                label: '2020 Season Stats',
+                                data: {{ values | safe }},
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
                         }
-                    }
-                }
-            });
-            </script>
+                    });
+                    </script>
+                </div>
+            </div>
         </div>
     </div>
 </div>
