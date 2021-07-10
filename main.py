@@ -46,15 +46,39 @@ def player():
     lastName = request.form["lastName"] # Player's last name
 
     playerID,playerImage,team,position = getPlayer(firstName,lastName)
-    ppg= getLogs(playerID)
+    ppg,apg,rpg,tpg= getLogs(playerID)
 
-    data = [
-        ("PPG", ppg),
-        ("APG", 9)
+    points_data = [
+        ("This player's PPG", ppg),
+        ("2020 Regular Season PPG Leader", 32.0)
     ]
 
-    labels = [row[0] for row in data]
-    values = [row[1] for row in data]
+    pts_labels = [row[0] for row in points_data]
+    pts_values = [row[1] for row in points_data]
+
+    ast_data = [
+        ("This player's APG", apg),
+        ("2020 Regular Season APG Leader", 10.2)
+    ]
+
+    ast_labels = [row[0] for row in ast_data]
+    ast_values = [row[1] for row in ast_data]
+
+    reb_data = [
+        ("This player's RPG", rpg),
+        ("2020 Regular Season RPG Leader", 15.2)
+    ]
+
+    reb_labels = [row[0] for row in reb_data]
+    reb_values = [row[1] for row in reb_data]
+
+    to_data = [
+        ("This player's TOPG", rpg),
+        ("2020 Regular Season TOPG Leader", 5.0)
+    ]
+
+    to_labels = [row[0] for row in to_data]
+    to_values = [row[1] for row in to_data]
 
     
     return render_template("player.html",
@@ -64,8 +88,14 @@ def player():
     image = playerImage,
     position = position,
     ppg = ppg,
-    labels = labels,
-    values = values
+    pts_labels = pts_labels,
+    pts_values = pts_values,
+    ast_labels = ast_labels,
+    ast_values = ast_values,
+    reb_labels = reb_labels,
+    reb_values = reb_values,
+    to_labels = to_labels,
+    to_values = to_values
     )
 
 def getLogs(playerID): #Gets points and other stats averaged
@@ -92,11 +122,17 @@ def getLogs(playerID): #Gets points and other stats averaged
     while i < len(jsonData):
         if jsonData[i]["PlayerID"] == playerID:
             points = jsonData[i]["Points"]
+            assists = jsonData[i]["Assists"]
+            rebs = jsonData[i]["Rebounds"]
+            turnovrs = jsonData[i]["Turnovers"]
             games = jsonData[i]["Games"]
             ppg = round(points / games, 2) # round up to two decimal places
+            apg = round(assists / games, 2)
+            rpg = round(rebs / games, 2)
+            tpg = round(turnovrs / games, 2)
         i += 1
 
-    return ppg
+    return ppg,apg,rpg,tpg
 
 
 def getPlayer(firstName,lastName): # Gets a player 
