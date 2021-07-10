@@ -6,34 +6,203 @@ Fantasy Buddy
 
 {%block body %}
 
-<!-- -->
-<div class="border d-flex align-items-center justify-content-center"  
-style="height: 50%;"">                                              <!-- Main Div-->
-    <div class="card" style="width: 18rem"> <!-- Card Div -->
-        <div class = "text-center"> <!-- Center player's image-->
-            <img 
-            src= {{ image }}
-            class="img-fluid rounded-circle"
-            alt="..."
-            style="width: 90px;"
-            />
-        </div>
-        <div class="card-body">
-        <h5 class="card-title">{{firstName}} {{ lastName }} </h5>
-        <p class="card-text">
-            Information about this player
-        </p>
-        </div>
-        <ul class="list-group list-group-flush">
-        <li class="list-group-item"><p class="h6">Team: {{team}}</p></li>
-        <li class="list-group-item"><p class="h6">Position: {{position}}</p></li>
-        </ul>
-        <div class="card-body">
-            <div class = "text-center"> <a href="/search" class="card-link">Search for another player</a></div>
+<div class="d-grid gap-2">
+    <div class="container-fluid">
+        <div class="mx-auto" style="width:200px;">                               <!--Card Column-->
+            <div class="card" style="width: 18rem">         <!-- Card Div -->
+                <div class = "text-center">         <!-- Center player's image-->
+                    <img 
+                    src= {{ image }}
+                    class="img-fluid rounded-circle"
+                    alt="..."
+                    style="width: 90px;"
+                    />
+                </div>
+                <div class="card-body">
+                <h5 class="card-title">{{firstName}} {{ lastName }} </h5>
+                <p class="card-text">
+                    Information about this player
+                </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                <li class="list-group-item"><p class="h6">Team: {{team}}</p></li>
+                <li class="list-group-item"><p class="h6">Position: {{position}}</p></li>
+                </ul>
+                <div class="card-body">
+                    <div class = "text-center"> <a href="/search" class="card-link">Search for another player</a></div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-sm-3"> <!--Chart Column-->
+            <div class = "card card-style mb-2">
+                <div class = "card-body">
+                    <div class = "chart-container" style="position: relative;">
+                        <canvas id="ptsChart"></canvas>
+                        <script>
+                        var ctx = document.getElementById('ptsChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: {{ pts_labels | safe }},
+                                datasets: [{
+                                    label: '2020 Regular Season Points Per Game',
+                                    data: {{ pts_values | safe }},
+                                    backgroundColor: [
+                                        'rgba(39, 190, 57, 0.2)', // Red
+                                        'rgba(54, 162, 235, 0.2)' //
+                                    ],
+                                    borderColor: [
+                                        'rgba(39, 190, 57, 1)',
+                                        'rgba(54, 162, 235, 1)'
+                                    ],
+                                    borderWidth: 1,
+                                    barThickness: 50
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3"> <!--Chart Column-->
+            <div class = "card card-style mb-2">
+                <div class = "card-body">
+                    <div class = "chart-container" style="position: relative;">
+                        <canvas id="astChart"></canvas>
+                        <script>
+                        var ctx = document.getElementById('astChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: {{ ast_labels | safe }},
+                                datasets: [{
+                                    label: '2020 Regular Season Assists Per Game',
+                                    data: {{ ast_values | safe }},
+                                    backgroundColor: [
+                                        'rgba(39, 188, 190, 0.2)',
+                                        'rgba(190, 41, 39, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(39, 188, 190, 1)',
+                                        'rgba(190, 41, 39, 1)'
+                                    ],
+                                    borderWidth: 1,
+                                    barThickness: 50
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3"> <!--Chart Column-->
+            <div class = "card card-style mb-2">
+                <div class = "card-body">
+                    <div class = "chart-container" style="position: relative;">
+                        <canvas id="rebChart"></canvas>
+                        <script>
+                        var ctx = document.getElementById('rebChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: {{ reb_labels | safe }},
+                                datasets: [{
+                                    label: '2020 Regular Season Rebounds Per Game',
+                                    data: {{ reb_values | safe }},
+                                    backgroundColor: [
+                                        'rgba(102, 39, 190, 0.2)',
+                                        'rgba(127, 190, 39, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(102, 39, 190, 1)',
+                                        'rgba(127, 190, 39, 1)'
+                                    ],
+                                    borderWidth: 1,
+                                    barThickness: 50
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-3"> <!--Chart Column-->
+            <div class = "card card-style mb-2">
+                <div class = "card-body">
+                    <div class = "chart-container" style="position: relative;">
+                        <canvas id="toChart"></canvas>
+                        <script>
+                        var ctx = document.getElementById('toChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: {{ to_labels | safe }},
+                                datasets: [{
+                                    label: '2020 Regular Season Turnovers Per Game',
+                                    data: {{ to_values | safe }},
+                                    backgroundColor: [
+                                        'rgba(255, 99, 132, 0.2)',
+                                        'rgba(54, 162, 235, 0.2)',
+                                        'rgba(255, 206, 86, 0.2)',
+                                        'rgba(75, 192, 192, 0.2)',
+                                        'rgba(153, 102, 255, 0.2)',
+                                        'rgba(255, 159, 64, 0.2)'
+                                    ],
+                                    borderColor: [
+                                        'rgba(255, 99, 132, 1)',
+                                        'rgba(54, 162, 235, 1)',
+                                        'rgba(255, 206, 86, 1)',
+                                        'rgba(75, 192, 192, 1)',
+                                        'rgba(153, 102, 255, 1)',
+                                        'rgba(255, 159, 64, 1)'
+                                    ],
+                                    borderWidth: 1,
+                                    barThickness: 50
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 {%endblock%}

@@ -23,6 +23,22 @@ def search():
 
     return render_template("search.html")
 
+@app.route("/test")
+def test():
+
+    playerID,playerImage,team,position = getPlayer("Bradley","Beal")
+    ppg= getLogs(playerID)
+
+    data = [
+        ("PPG", ppg),
+        ("APG", 9)
+    ]
+
+    labels = [row[0] for row in data]
+    values = [row[1] for row in data]
+
+    return render_template("test.html", labels=labels, values=values,team=team,position=position,ppg=ppg)
+
 @app.route("/player",methods=["GET","POST"])
 def player():
 
@@ -30,7 +46,39 @@ def player():
     lastName = request.form["lastName"] # Player's last name
 
     playerID,playerImage,team,position = getPlayer(firstName,lastName)
-    p_points = getLogs(playerID)
+    ppg,apg,rpg,tpg= getLogs(playerID) # Get stats
+
+    points_data = [
+        ("This player's PPG", ppg),
+        ("2020 Regular Season PPG Leader", 32.0)
+    ]
+
+    pts_labels = [row[0] for row in points_data]
+    pts_values = [row[1] for row in points_data]
+
+    ast_data = [
+        ("This player's APG", apg),
+        ("2020 Regular Season APG Leader", 10.2)
+    ]
+
+    ast_labels = [row[0] for row in ast_data]
+    ast_values = [row[1] for row in ast_data]
+
+    reb_data = [
+        ("This player's RPG", rpg),
+        ("2020 Regular Season RPG Leader", 15.2)
+    ]
+
+    reb_labels = [row[0] for row in reb_data]
+    reb_values = [row[1] for row in reb_data]
+
+    to_data = [
+        ("This player's TOPG", tpg),
+        ("2020 Regular Season TOPG Leader", 5)
+    ]
+
+    to_labels = [row[0] for row in to_data]
+    to_values = [row[1] for row in to_data]
 
     
     return render_template("player.html",
@@ -39,22 +87,40 @@ def player():
     team=team,
     image = playerImage,
     position = position,
-    points=p_points
+    ppg = ppg,
+    pts_labels = pts_labels,
+    pts_values = pts_values,
+    ast_labels = ast_labels,
+    ast_values = ast_values,
+    reb_labels = reb_labels,
+    reb_values = reb_values,
+    to_labels = to_labels,
+    to_values = to_values
     )
 
-def getLogs(playerID): #Gets points and other stats
-    url = "https://api.sportsdata.io/v3/nba/stats/json/PlayerGameStatsBySeason/2020/" + str(playerID) + "/all" # Add player ID to URL to get this player's stats
+def getLogs(playerID): #Gets points and other stats averaged
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2020" # Endpoint for stats by all players in 2020 season
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
-    points_list = [] 
 
-    for i in range(len(jsonData)):
-        points = jsonData[i]["Points"]
-        points_list.append(points)
+    ppg = 0
+    i = 0
+    while i < len(jsonData):
+        if jsonData[i]["PlayerID"] == playerID:
+            points = jsonData[i]["Points"]
+            assists = jsonData[i]["Assists"]
+            rebs = jsonData[i]["Rebounds"]
+            turnovrs = jsonData[i]["Turnovers"]
+            games = jsonData[i]["Games"]
+            ppg = round(points / games, 2) # round up to two decimal places
+            apg = round(assists / games, 2)
+            rpg = round(rebs / games, 2)
+            tpg = round(turnovrs / games, 2)
         i += 1
 
-    return points_list
+    return ppg,apg,rpg,tpg
+
 
 def getPlayer(firstName,lastName): # Gets a player 
     url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
