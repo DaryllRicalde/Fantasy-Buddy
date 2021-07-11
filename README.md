@@ -1,5 +1,8 @@
 # Fantasy-Buddy
-Helping users with the fantasy drafting/trading process through visual aids
+Helping users with the fantasy drafting/trading process through data visualisation
+
+https://fantasybuddy.herokuapp.com/
+
 ## Frameworks and Languages used
 - Flask
 - Python
