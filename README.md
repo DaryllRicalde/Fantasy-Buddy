@@ -11,6 +11,10 @@ NBA 2020 Fantasy data from https://sportsdata.io/nba-api
 
 Stock images from pexels.com
 
+## Home page
+![image](https://user-images.githubusercontent.com/62503648/125189394-3dc35b80-e27b-11eb-90f4-6e3a54516d41.png)
+
+
 ## Search page
 Provide the player's first and last name then hit 'Search'. Case insensitive but extra spaces may cause errors.
 
