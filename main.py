@@ -99,7 +99,7 @@ def player():
     )
 
 def getLogs(playerID): #Gets points and other stats averaged
-    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2020" # Endpoint for stats by all players in 2020 season
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2021" # Endpoint for stats by all players in 2020 season
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
