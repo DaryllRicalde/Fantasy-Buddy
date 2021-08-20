@@ -7,13 +7,13 @@ from flask import Flask, render_template, request, url_for
 
 app = Flask(__name__)
 
-key = config.api_key
+api_key = config.api_key # API Key
+now = datetime.datetime.now()
+this_year = now.year #Current year
 
 @app.route("/")
 def index():
-
     url = "https://api.sportsdata.io/v3/nba/scores/json/Players" 
-    api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
 
@@ -103,11 +103,46 @@ def player():
     to_values = to_values
     )
 
-def getLogs(playerID): #Gets points and other stats averaged
-    now = datetime.datetime.now()
-    this_year = now.year
+def getHighestPts():
     url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
-    api_key = config.api_key
+    headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
+    jsonData = requests.get(url, headers=headers).json()
+
+    max_pts = 0
+    i = 0
+    while i < len(jsonData):
+        points = jsonData[i]["Points"]
+        if(points > max_pts):
+            max_pts = points
+        i += 1
+    
+    highest_avg = round(max_pts / 2)
+
+    
+
+
+def getHighestAst():
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
+    headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
+    jsonData = requests.get(url, headers=headers).json()   
+    i = 0
+
+def getHighestReb():
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
+    headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
+    jsonData = requests.get(url, headers=headers).json()    
+    i = 0
+
+def getHighestTO():
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
+    headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
+    jsonData = requests.get(url, headers=headers).json()    
+
+    i = 0
+
+def getLogs(playerID): #Gets points and other stats averaged
+
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
 
@@ -131,7 +166,6 @@ def getLogs(playerID): #Gets points and other stats averaged
 
 def getPlayer(firstName,lastName): # Gets a player 
     url = "https://api.sportsdata.io/v3/nba/scores/json/Players"
-    api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
 
