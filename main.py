@@ -1,6 +1,7 @@
 import requests
 import config
 import json
+import datetime
 
 from flask import Flask, render_template, request, url_for
 
@@ -103,7 +104,9 @@ def player():
     )
 
 def getLogs(playerID): #Gets points and other stats averaged
-    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/2021" # Endpoint for stats by all players in 2020 season
+    now = datetime.datetime.now()
+    this_year = now.year
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
     api_key = config.api_key
     headers = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
     jsonData = requests.get(url, headers=headers).json()
