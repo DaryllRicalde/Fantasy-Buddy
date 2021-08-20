@@ -48,7 +48,7 @@ Fantasy Buddy
                             data: {
                                 labels: {{ pts_labels | safe }},
                                 datasets: [{
-                                    label: '2020 Regular Season Points Per Game',
+                                    label: {{this_year}} + ' Regular Season Points Per Game',
                                     data: {{ pts_values | safe }},
                                     backgroundColor: [
                                         'rgba(39, 190, 57, 0.2)', // Red
@@ -88,7 +88,7 @@ Fantasy Buddy
                             data: {
                                 labels: {{ ast_labels | safe }},
                                 datasets: [{
-                                    label: '2020 Regular Season Assists Per Game',
+                                    label: {{this_year}} + ' Regular Season Assists Per Game',
                                     data: {{ ast_values | safe }},
                                     backgroundColor: [
                                         'rgba(39, 188, 190, 0.2)',
@@ -128,7 +128,7 @@ Fantasy Buddy
                             data: {
                                 labels: {{ reb_labels | safe }},
                                 datasets: [{
-                                    label: '2020 Regular Season Rebounds Per Game',
+                                    label: {{this_year}} + ' Regular Season Rebounds Per Game',
                                     data: {{ reb_values | safe }},
                                     backgroundColor: [
                                         'rgba(102, 39, 190, 0.2)',
@@ -168,7 +168,7 @@ Fantasy Buddy
                             data: {
                                 labels: {{ to_labels | safe }},
                                 datasets: [{
-                                    label: '2020 Regular Season Turnovers Per Game',
+                                    label: {{this_year}} + ' Regular Season Turnovers Per Game',
                                     data: {{ to_values | safe }},
                                     backgroundColor: [
                                         'rgba(255, 99, 132, 0.2)',

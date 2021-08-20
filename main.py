@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 api_key = config.api_key # API Key
 now = datetime.datetime.now()
-this_year = now.year #Current year
+this_year = str(now.year) #Current year
 global_header = {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
 
 @app.route("/")
@@ -55,6 +55,9 @@ def player():
     ppg,apg,rpg,tpg= getLogs(playerID) # Get stats
 
     highest_ppg = getHighestPts()
+    highest_ast = getHighestAst()
+    highest_rebs = getHighestReb()
+    highest_to = getHighestTO()
 
     points_data = [
         ("This player's PPG", ppg),
@@ -66,7 +69,7 @@ def player():
 
     ast_data = [
         ("This player's APG", apg),
-        ("2020 Regular Season APG Leader", 10.2)
+        ("2020 Regular Season APG Leader", highest_ast)
     ]
 
     ast_labels = [row[0] for row in ast_data]
@@ -74,7 +77,7 @@ def player():
 
     reb_data = [
         ("This player's RPG", rpg),
-        ("2020 Regular Season RPG Leader", 15.2)
+        ("2020 Regular Season RPG Leader", highest_rebs)
     ]
 
     reb_labels = [row[0] for row in reb_data]
@@ -82,7 +85,7 @@ def player():
 
     to_data = [
         ("This player's TOPG", tpg),
-        ("2020 Regular Season TOPG Leader", 5)
+        ("2020 Regular Season TOPG Leader", highest_to)
     ]
 
     to_labels = [row[0] for row in to_data]
@@ -103,40 +106,67 @@ def player():
     reb_labels = reb_labels,
     reb_values = reb_values,
     to_labels = to_labels,
-    to_values = to_values
+    to_values = to_values,
+    this_year = this_year
     )
 
 def getHighestPts():
-    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + this_year # Endpoint for stats by all players in 2020 season
     headers = global_header
     jsonData = requests.get(url, headers=headers).json()
 
-    max_pts = 0
     i = 0
-    highest_pts = 0
+    highest_ppg = 0
 
     while i < len(jsonData):
         points = jsonData[i]["Points"]
-        if(points > max_pts):
-            max_pts = points
+        games = jsonData[i]["Games"]
+        if(games != 0):
+            curr_ppg = round(points/games,2)
+            if(curr_ppg > highest_ppg):
+                highest_ppg = curr_ppg
         i += 1
-
     
-    highest_pts = round(max_pts / 82, 2) # 82 games
-    return highest_pts 
+    return highest_ppg 
 
 
 def getHighestAst():
-    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + this_year # Endpoint for stats by all players in 2020 season
     headers = global_header
     jsonData = requests.get(url, headers=headers).json()   
     i = 0
+    highest_ast = 0
+
+    while i < len(jsonData):
+        asts = jsonData[i]["Assists"]
+        games = jsonData[i]["Games"]
+        if(games != 0):
+            curr_ast = round(asts/games,2)
+            if(curr_ast > highest_ast):
+                highest_ast = curr_ast
+        i += 1
+    
+    return highest_ast 
+
 
 def getHighestReb():
-    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + this_year # Endpoint for stats by all players in 2020 season
     headers = global_header
     jsonData = requests.get(url, headers=headers).json()    
     i = 0
+
+    highest_rebs = 0
+
+    while i < len(jsonData):
+        rebs = jsonData[i]["Rebounds"]
+        games = jsonData[i]["Games"]
+        if(games != 0):
+            curr_rebs = round(rebs/games,2)
+            if(curr_rebs > highest_rebs):
+                highest_rebs = curr_rebs
+        i += 1
+    
+    return highest_rebs 
 
 def getHighestTO():
     url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
@@ -144,10 +174,22 @@ def getHighestTO():
     jsonData = requests.get(url, headers=headers).json()    
 
     i = 0
+    highest_to = 0
+
+    while i < len(jsonData):
+        to = jsonData[i]["Rebounds"]
+        games = jsonData[i]["Games"]
+        if(games != 0):
+            curr_to = round(to/games,2)
+            if(curr_to > highest_to):
+                highest_to = curr_to
+        i += 1
+    
+    return highest_to 
 
 def getLogs(playerID): #Gets points and other stats averaged
 
-    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + str(this_year) # Endpoint for stats by all players in 2020 season
+    url = "https://fly.sportsdata.io/v3/nba/stats/json/PlayerSeasonStats/" + this_year # Endpoint for stats by all players in 2020 season
     headers = global_header
     jsonData = requests.get(url, headers=headers).json()
 
